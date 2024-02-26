@@ -1,6 +1,7 @@
 const useCasesGetAllTask = require("../application/getAllTasks");
 const useCaseGetTaskById = require("../application/getTaskById");
 const useCaseCreateTask = require("../application/createTask");
+const useCaseDeleteTask = require('../application/deleteTask');
 const ExcepcionTaskNotFound = require("../exceptions/taskNotFound");
 const ExcepcionTaskAlreadyExist = require("../exceptions/taskAlreadyExist");
 
@@ -35,4 +36,17 @@ async function createTask(req, res) {
   }
 }
 
-module.exports = { getAllTask, getTaskById, createTask };
+async function deleteTask(req, res){
+  try {
+    const taskId = req.params.id;
+    await useCaseDeleteTask.deleteTaskById(taskId) 
+    return res.status(200).send({message: `Task with id: ${taskId} was deleted successfully `})
+  } catch (error) {
+    if (error instanceof ExcepcionTaskAlreadyExist) {
+      return res.status(400).send({ error: error.message });
+    }
+    return res.send({ error: error.message });
+  }
+}
+
+module.exports = { getAllTask, getTaskById, createTask, deleteTask };

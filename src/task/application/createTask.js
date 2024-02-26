@@ -3,7 +3,6 @@ const ExcepcionTaskAlreadyExist  = require('../exceptions/taskAlreadyExist')
 
 async function createTask(task) {
   taskFound = await taskRepository.getById(task.id);
-  console.log(task)
   if(taskFound){
     throw new ExcepcionTaskAlreadyExist(task.id)
   }
