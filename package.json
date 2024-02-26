@@ -1,0 +1,14 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --watch app.js"
+  },
+  "author": "uberney",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
