@@ -1,10 +1,10 @@
 const taskRepository = require("../infrastructure/task-repository");
-const excepcionTaskNotFound  = require('../exceptions/taskNotFound')
+const ExcepcionTaskNotFound  = require('../exceptions/taskNotFound')
 
 async function getTaskById(id) {
   task = await taskRepository.getById(id);
-  if (task.length === 0) {
-    throw new excepcionTaskNotFound(id);
+  if (!task) {
+    throw new ExcepcionTaskNotFound(id);
   }
   return task;
 }

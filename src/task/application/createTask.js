@@ -1,7 +1,13 @@
-const taskRepository = require('../infrastructure/task-repository')
+const taskRepository = require("../infrastructure/task-repository");
+const ExcepcionTaskAlreadyExist  = require('../exceptions/taskAlreadyExist')
 
-async function createTask(){
-    return await taskRepository.getAll();
+async function createTask(task) {
+  taskFound = await taskRepository.getById(task.id);
+  console.log(task)
+  if(taskFound){
+    throw new ExcepcionTaskAlreadyExist(task.id)
+  }
+  return await taskRepository.create(task);
 }
 
-module.exports = {getAllTask}
+module.exports = { createTask };

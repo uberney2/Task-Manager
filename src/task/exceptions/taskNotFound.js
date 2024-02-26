@@ -1,7 +1,7 @@
-class excepcionTaskNotFound extends Error{
+class ExcepcionTaskNotFound extends Error{
     constructor(id){
         super(`task with id: ${id} not found`)
     }
 }
 
-module.exports = excepcionTaskNotFound;
+module.exports = ExcepcionTaskNotFound;

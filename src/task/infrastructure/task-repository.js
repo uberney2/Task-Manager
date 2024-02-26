@@ -10,7 +10,7 @@ async function getAll(){
 
 async function getById(id){
     try {
-        task = tasks.filter(task => task.id === Number(id));
+        task = tasks.find(task => task.id === Number(id));
         return task
     } catch (error) {
         console.log(error);
@@ -18,7 +18,12 @@ async function getById(id){
 }
 
 async function create(task){
-
+    try {
+        tasks.push(task)
+        return tasks
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-module.exports = {getAll, getById};
+module.exports = {getAll, getById, create};

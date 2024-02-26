@@ -1,9 +1,11 @@
-const useCasesGetAll = require("../application/getAllTasks");
+const useCasesGetAllTask = require("../application/getAllTasks");
 const useCaseGetTaskById = require("../application/getTaskById");
-const excepcionTaskNotFound  = require('../exceptions/taskNotFound')
+const useCaseCreateTask = require("../application/createTask");
+const ExcepcionTaskNotFound = require("../exceptions/taskNotFound");
+const ExcepcionTaskAlreadyExist = require("../exceptions/taskAlreadyExist");
 
 async function getAllTask(req, res) {
-  const tasks = await useCasesGetAll.getAllTask();
+  const tasks = await useCasesGetAllTask.getAllTask();
   return res.status(200).send(tasks);
 }
 
@@ -13,10 +15,24 @@ async function getTaskById(req, res) {
     const task = await useCaseGetTaskById.getTaskById(taskId);
     return res.status(200).send(task);
   } catch (error) {
-    if (error instanceof excepcionTaskNotFound)
-    return res.status(404).send({error: error.message});
+    if (error instanceof ExcepcionTaskNotFound) {
+      return res.status(404).send({ error: error.message });
+    }
+    return res.send({ error: error.message });
   }
-  return res.send({error: error.message})
 }
 
-module.exports = { getAllTask, getTaskById };
+async function createTask(req, res) {
+  try {
+    const newTask = req.body;
+    const savedTask = await useCaseCreateTask.createTask(newTask);
+    return res.status(201).send(savedTask);
+  } catch (error) {
+    if (error instanceof ExcepcionTaskAlreadyExist) {
+      return res.status(400).send({ error: error.message });
+    }
+    return res.send({ error: error.message });
+  }
+}
+
+module.exports = { getAllTask, getTaskById, createTask };
