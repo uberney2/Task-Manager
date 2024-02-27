@@ -1,10 +1,15 @@
 let tasks = require("./data.json");
 
-async function getAll(page, pageSize) {
+async function getAll(page, pageSize, status) {
   try {
+    let filteredTasks = tasks;
+    if(status){
+      filteredTasks = filteredTasks.filter(task => task.status === status);
+    }
+
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const paginatedTasks = tasks.slice(startIndex, endIndex);
+    const paginatedTasks = filteredTasks.slice(startIndex, endIndex);
     return paginatedTasks;
   } catch (error) {
     console.log(error);
