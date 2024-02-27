@@ -6,8 +6,11 @@ const useCaseUpdateTask = require('../application/updateTask')
 const ExcepcionTaskNotFound = require("../exceptions/taskNotFound");
 const ExcepcionTaskAlreadyExist = require("../exceptions/taskAlreadyExist");
 
+//the pagination use queryParams like this: /api/v1/task?page=1&pageSize=10
 async function getAllTask(req, res) {
-  const tasks = await useCasesGetAllTask.getAllTask();
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  const tasks = await useCasesGetAllTask.getAllTask(page, pageSize);
   return res.status(200).send(tasks);
 }
 

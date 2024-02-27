@@ -1,8 +1,11 @@
 let tasks = require("./data.json");
 
-async function getAll() {
+async function getAll(page, pageSize) {
   try {
-    return tasks;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedTasks = tasks.slice(startIndex, endIndex);
+    return paginatedTasks;
   } catch (error) {
     console.log(error);
   }
