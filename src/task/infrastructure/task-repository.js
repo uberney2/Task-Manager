@@ -34,4 +34,14 @@ async function deleted(id) {
   }
 }
 
-module.exports = { getAll, getById, create, deleted };
+async function update(taskToUpdate){
+  try {
+    const index = tasks.findIndex(task => task.id === Number(taskToUpdate.id));
+    tasks[index] = taskToUpdate;
+    return tasks;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { getAll, getById, create, deleted, update };
